@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #0F172A;
+  --color-primary-muted: #475569;
+  --color-surface: #FFFFFF;
+  --color-surface-subtle: #F8FAFC;
+  --color-border: #E2E8F0;
+  --color-accent: #3B82F6;
+  --color-accent-hover: #2563EB;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--color-surface-subtle);
+  color: var(--color-primary);
+  line-height: 1.6;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface-subtle);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-muted);
+}
+
+/* Button base styles */
+.btn {
+  @apply inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-150;
+}
+
+.btn-primary {
+  @apply bg-accent text-white hover:bg-accent-hover;
+}
+
+.btn-secondary {
+  @apply bg-surface-subtle text-primary border border-border hover:bg-border;
+}
+
+.btn-ghost {
+  @apply bg-transparent text-primary-muted hover:bg-surface-subtle hover:text-primary;
+}
+
+.btn-sm {
+  @apply px-2 py-1 text-xs;
+}
+
+.btn-lg {
+  @apply px-6 py-3 text-base;
+}
+
+/* Badge styles */
+.badge {
+  @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium;
+}
+
+.badge-default {
+  @apply bg-surface-subtle text-primary border border-border;
+}
+
+.badge-accent {
+  @apply bg-blue-50 text-accent;
+}
+
+.badge-success {
+  @apply bg-green-50 text-success;
+}
+
+.badge-warning {
+  @apply bg-yellow-50 text-warning;
+}
+
+.badge-error {
+  @apply bg-red-50 text-error;
+}
+
+/* Card styles */
+.card {
+  @apply bg-surface border border-border rounded-lg p-4;
+}
+
+/* Progress bar */
+.progress {
+  @apply h-2 bg-border rounded-full overflow-hidden;
+}
+
+.progress-bar {
+  @apply h-full bg-accent rounded-full transition-all duration-300;
+}
+
+.progress-bar-success {
+  @apply bg-success;
+}
+
+/* Upload zone */
+.upload-zone {
+  @apply border-2 border-dashed border-border rounded-lg p-12 text-center transition-all duration-150 cursor-pointer;
+}
+
+.upload-zone:hover {
+  @apply border-accent bg-blue-50/50;
+}
+
+.upload-zone.dragging {
+  @apply border-accent bg-blue-50;
+}

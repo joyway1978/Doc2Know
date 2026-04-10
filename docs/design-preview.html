@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doc2Know Design System Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Colors */
+      --color-primary: #0F172A;
+      --color-primary-muted: #475569;
+      --color-surface: #FFFFFF;
+      --color-surface-subtle: #F8FAFC;
+      --color-border: #E2E8F0;
+      --color-accent: #3B82F6;
+      --color-accent-hover: #2563EB;
+      --color-success: #10B981;
+      --color-warning: #F59E0B;
+      --color-error: #EF4444;
+
+      /* Dark mode colors */
+      --color-dark-primary: #F8FAFC;
+      --color-dark-surface: #0F172A;
+      --color-dark-surface-subtle: #1E293B;
+      --color-dark-border: #334155;
+
+      /* Spacing */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+
+      /* Border radius */
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+
+      /* Typography */
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--color-surface-subtle);
+      color: var(--color-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Dark mode styles */
+    body.dark-mode {
+      background: var(--color-dark-surface);
+      color: var(--color-dark-primary);
+    }
+
+    body.dark-mode .card {
+      background: var(--color-dark-surface);
+      border-color: var(--color-dark-border);
+    }
+
+    body.dark-mode .sidebar {
+      background: var(--color-dark-surface);
+      border-color: var(--color-dark-border);
+    }
+
+    body.dark-mode .mockup-container {
+      background: var(--color-dark-surface-subtle);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-xl);
+    }
+
+    header {
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-lg) var(--space-xl);
+      margin-bottom: var(--space-2xl);
+    }
+
+    header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+    }
+
+    header p {
+      color: var(--color-primary-muted);
+    }
+
+    .dark-mode header {
+      background: var(--color-dark-surface);
+      border-color: var(--color-dark-border);
+    }
+
+    .section {
+      margin-bottom: var(--space-2xl);
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--color-accent);
+      display: inline-block;
+    }
+
+    /* Color Palette */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+
+    .color-swatch {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+    }
+
+    .color-preview {
+      height: 80px;
+      display: flex;
+      align-items: flex-end;
+      padding: var(--space-sm);
+    }
+
+    .color-info {
+      background: var(--color-surface);
+      padding: var(--space-md);
+      font-size: 13px;
+    }
+
+    .color-name {
+      font-weight: 600;
+      margin-bottom: var(--space-xs);
+    }
+
+    .color-hex {
+      font-family: var(--font-mono);
+      color: var(--color-primary-muted);
+    }
+
+    .dark-mode .color-info {
+      background: var(--color-dark-surface);
+    }
+
+    /* Typography */
+    .type-specimen {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-lg);
+    }
+
+    .dark-mode .type-specimen {
+      background: var(--color-dark-surface);
+      border-color: var(--color-dark-border);
+    }
+
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .type-row:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .type-label {
+      width: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-primary-muted);
+    }
+
+    .type-sample {
+      flex: 1;
+    }
+
+    .type-meta {
+      font-size: 12px;
+      color: var(--color-primary-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* UI Components */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .component-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+    }
+
+    .dark-mode .component-card {
+      background: var(--color-dark-surface);
+      border-color: var(--color-dark-border);
+    }
+
+    .component-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: var(--space-md);
+      color: var(--color-primary-muted);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-accent-hover);
+    }
+
+    .btn-secondary {
+      background: var(--color-surface-subtle);
+      color: var(--color-primary);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--color-border);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-primary-muted);
+    }
+
+    .btn-ghost:hover {
+      background: var(--color-surface-subtle);
+      color: var(--color-primary);
+    }
+
+    .btn-sm {
+      padding: var(--space-xs) var(--space-sm);
+      font-size: 12px;
+    }
+
+    .btn-lg {
+      padding: var(--space-md) var(--space-lg);
+      font-size: 16px;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px var(--space-sm);
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .badge-default {
+      background: var(--color-surface-subtle);
+      color: var(--color-primary);
+      border: 1px solid var(--color-border);
+    }
+
+    .badge-accent {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--color-accent);
+    }
+
+    .badge-success {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--color-success);
+    }
+
+    .badge-warning {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--color-warning);
+    }
+
+    .badge-error {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--color-error);
+    }
+
+    /* Progress */
+    .progress {
+      height: 8px;
+      background: var(--color-border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--color-accent);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-bar-success {
+      background: var(--color-success);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+    }
+
+    .dark-mode .card {
+      background: var(--color-dark-surface);
+    }
+
+    /* Mockup */
+    .mockup-container {
+      background: #f1f5f9;
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin-top: var(--space-lg);
+    }
+
+    .app-mockup {
+      background: var(--color-surface);
+      border-radius: var(--radius-md);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      display: flex;
+      height: 500px;
+    }
+
+    .dark-mode .app-mockup {
+      background: var(--color-dark-surface);
+    }
+
+    .sidebar {
+      width: 240px;
+      background: var(--color-surface);
+      border-right: 1px solid var(--color-border);
+      padding: var(--space-lg);
+    }
+
+    .dark-mode .sidebar {
+      background: var(--color-dark-surface);
+    }
+
+    .sidebar-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: var(--space-lg);
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-xs);
+      font-size: 14px;
+      color: var(--color-primary-muted);
+      cursor: pointer;
+    }
+
+    .nav-item:hover {
+      background: var(--color-surface-subtle);
+      color: var(--color-primary);
+    }
+
+    .nav-item.active {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--color-accent);
+    }
+
+    .main-content {
+      flex: 1;
+      padding: var(--space-xl);
+      overflow: auto;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .upload-zone {
+      border: 2px dashed var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-2xl);
+      text-align: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .upload-zone:hover {
+      border-color: var(--color-accent);
+      background: rgba(59, 130, 246, 0.02);
+    }
+
+    .file-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-sm);
+    }
+
+    .file-info {
+      flex: 1;
+    }
+
+    .file-name {
+      font-weight: 500;
+      margin-bottom: var(--space-xs);
+    }
+
+    .file-meta {
+      font-size: 12px;
+      color: var(--color-primary-muted);
+    }
+
+    .file-progress {
+      width: 120px;
+    }
+
+    .knowledge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .knowledge-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      cursor: pointer;
+      transition: box-shadow 0.15s ease;
+    }
+
+    .knowledge-card:hover {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .knowledge-title {
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+    }
+
+    .knowledge-summary {
+      font-size: 13px;
+      color: var(--color-primary-muted);
+      margin-bottom: var(--space-md);
+      line-height: 1.5;
+    }
+
+    .tag-list {
+      display: flex;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+    }
+
+    /* Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: var(--space-lg);
+      right: var(--space-lg);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .dark-mode .theme-toggle {
+      background: var(--color-dark-surface);
+      border-color: var(--color-dark-border);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+    }
+
+    @media (max-width: 768px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .app-mockup {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .sidebar {
+        width: 100%;
+      }
+
+      .container {
+        padding: var(--space-md);
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()">
+    <span id="theme-icon">🌙</span>
+    <span id="theme-text">Dark Mode</span>
+  </button>
+
+  <header>
+    <div class="container">
+      <h1>Doc2Know Design System</h1>
+      <p>Professional minimalist design for document-to-knowledge conversion tool</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Color Palette -->
+    <section class="section">
+      <h2 class="section-title">Color Palette</h2>
+      <div class="color-grid">
+        <div class="color-swatch">
+          <div class="color-preview" style="background: #0F172A;">
+            <span style="color: white; font-size: 12px;">Primary</span>
+          </div>
+          <div class="color-info">
+            <div class="color-name">Primary</div>
+            <div class="color-hex">#0F172A</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-preview" style="background: #3B82F6;">
+            <span style="color: white; font-size: 12px;">Accent</span>
+          </div>
+          <div class="color-info">
+            <div class="color-name">Accent</div>
+            <div class="color-hex">#3B82F6</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-preview" style="background: #F8FAFC; border-bottom: 1px solid var(--color-border);">
+            <span style="color: #0F172A; font-size: 12px;">Surface Subtle</span>
+          </div>
+          <div class="color-info">
+            <div class="color-name">Surface Subtle</div>
+            <div class="color-hex">#F8FAFC</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-preview" style="background: #FFFFFF; border-bottom: 1px solid var(--color-border);">
+            <span style="color: #0F172A; font-size: 12px;">Surface</span>
+          </div>
+          <div class="color-info">
+            <div class="color-name">Surface</div>
+            <div class="color-hex">#FFFFFF</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-preview" style="background: #10B981;">
+            <span style="color: white; font-size: 12px;">Success</span>
+          </div>
+          <div class="color-info">
+            <div class="color-name">Success</div>
+            <div class="color-hex">#10B981</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-preview" style="background: #EF4444;">
+            <span style="color: white; font-size: 12px;">Error</span>
+          </div>
+          <div class="color-info">
+            <div class="color-name">Error</div>
+            <div class="color-hex">#EF4444</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography -->
+    <section class="section">
+      <h2 class="section-title">Typography (Inter)</h2>
+      <div class="type-specimen">
+        <div class="type-row">
+          <div class="type-label">Display</div>
+          <div class="type-sample" style="font-size: 36px; font-weight: 700; line-height: 1.2;">Doc2Know</div>
+          <div class="type-meta">36px / Bold</div>
+        </div>
+        <div class="type-row">
+          <div class="type-label">H1</div>
+          <div class="type-sample" style="font-size: 28px; font-weight: 700;">文档管理中心</div>
+          <div class="type-meta">28px / Bold</div>
+        </div>
+        <div class="type-row">
+          <div class="type-label">H2</div>
+          <div class="type-sample" style="font-size: 20px; font-weight: 600;">上传新文档</div>
+          <div class="type-meta">20px / SemiBold</div>
+        </div>
+        <div class="type-row">
+          <div class="type-label">Body</div>
+          <div class="type-sample" style="font-size: 14px;">将您的 Word 文档拖放到下方区域，系统将自动分析并转换为结构化的知识库内容。</div>
+          <div class="type-meta">14px / Regular</div>
+        </div>
+        <div class="type-row">
+          <div class="type-label">Small</div>
+          <div class="type-sample" style="font-size: 12px; color: var(--color-primary-muted);">最后更新：2025-01-15 · 12KB</div>
+          <div class="type-meta">12px / Regular</div>
+        </div>
+        <div class="type-row">
+          <div class="type-label">Code</div>
+          <div class="type-sample" style="font-family: var(--font-mono); font-size: 13px; background: var(--color-surface-subtle); padding: 4px 8px; border-radius: 4px;">/output/topics/document.md</div>
+          <div class="type-meta">13px / Mono</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- UI Components -->
+    <section class="section">
+      <h2 class="section-title">UI Components</h2>
+      <div class="component-grid">
+        <div class="component-card">
+          <div class="component-title">Buttons</div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-primary">Primary</button>
+            <button class="btn btn-secondary">Secondary</button>
+            <button class="btn btn-ghost">Ghost</button>
+          </div>
+          <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-primary btn-sm">Small</button>
+            <button class="btn btn-primary">Default</button>
+            <button class="btn btn-primary btn-lg">Large</button>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <div class="component-title">Badges</div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="badge badge-default">Default</span>
+            <span class="badge badge-accent">Processing</span>
+            <span class="badge badge-success">Completed</span>
+            <span class="badge badge-warning">Warning</span>
+            <span class="badge badge-error">Error</span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <div class="component-title">Progress Bars</div>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 12px;">
+                <span>Uploading...</span>
+                <span>65%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width: 65%;"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 12px;">
+                <span>Processing</span>
+                <span>100%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar progress-bar-success" style="width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <div class="component-title">Cards</div>
+          <div class="card" style="margin-bottom: 12px;">
+            <div style="font-weight: 600; margin-bottom: 4px;">文档标题</div>
+            <div style="font-size: 13px; color: var(--color-primary-muted);">这是一段摘要内容，展示卡片的基本样式...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- App Mockups -->
+    <section class="section">
+      <h2 class="section-title">Interface Mockups</h2>
+
+      <!-- Documents Page -->
+      <div class="mockup-container">
+        <h3 style="margin-bottom: var(--space-md); font-size: 14px; color: var(--color-primary-muted);">文档管理页</h3>
+        <div class="app-mockup">
+          <div class="sidebar">
+            <div class="sidebar-title">Doc2Know</div>
+            <div class="nav-item">
+              <span>🏠</span> 首页
+            </div>
+            <div class="nav-item active">
+              <span>📄</span> 文档管理
+            </div>
+            <div class="nav-item">
+              <span>📚</span> 知识库
+            </div>
+            <div class="nav-item">
+              <span>⚙️</span> 设置
+            </div>
+          </div>
+          <div class="main-content">
+            <div class="page-header">
+              <h1 class="page-title">文档管理</h1>
+              <button class="btn btn-secondary" style="font-size: 12px;">刷新</button>
+            </div>
+
+            <div class="upload-zone">
+              <div style="font-size: 24px; margin-bottom: var(--space-sm);">📁</div>
+              <p style="font-weight: 500; margin-bottom: var(--space-xs);">拖放文件到此处上传</p>
+              <p style="font-size: 12px; color: var(--color-primary-muted);">支持 .docx, .doc, .pdf 格式</p>
+            </div>
+
+            <div class="file-list">
+              <div class="file-item">
+                <div style="font-size: 20px;">📄</div>
+                <div class="file-info">
+                  <div class="file-name">产品需求文档.docx</div>
+                  <div class="file-meta">256KB · 上传于 2分钟前</div>
+                  <div class="progress" style="margin-top: 8px;">
+                    <div class="progress-bar progress-bar-success" style="width: 100%;"></div>
+                  </div>
+                </div>
+                <span class="badge badge-success">已完成</span>
+              </div>
+
+              <div class="file-item">
+                <div style="font-size: 20px;">📄</div>
+                <div class="file-info">
+                  <div class="file-name">技术架构设计.pdf</div>
+                  <div class="file-meta">1.2MB · 上传于 5分钟前</div>
+                  <div class="progress" style="margin-top: 8px;">
+                    <div class="progress-bar" style="width: 75%;"></div>
+                  </div>
+                </div>
+                <span class="badge badge-accent">处理中</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Knowledge Base Page -->
+      <div class="mockup-container" style="margin-top: var(--space-xl);">
+        <h3 style="margin-bottom: var(--space-md); font-size: 14px; color: var(--color-primary-muted);">知识库浏览页</h3>
+        <div class="app-mockup">
+          <div class="sidebar">
+            <div class="sidebar-title">Doc2Know</div>
+            <div class="nav-item">
+              <span>🏠</span> 首页
+            </div>
+            <div class="nav-item">
+              <span>📄</span> 文档管理
+            </div>
+            <div class="nav-item active">
+              <span>📚</span> 知识库
+            </div>
+            <div class="nav-item">
+              <span>⚙️</span> 设置
+            </div>
+          </div>
+          <div class="main-content">
+            <div class="page-header">
+              <h1 class="page-title">知识库</h1>
+              <button class="btn btn-primary" style="font-size: 12px;">重建索引</button>
+            </div>
+
+            <div class="knowledge-grid">
+              <div class="knowledge-card">
+                <div class="knowledge-title">产品需求文档</div>
+                <div class="knowledge-summary">本文档详细描述了Doc2Know产品的核心功能需求，包括文档解析、AI分析和知识库生成等模块...</div>
+                <div class="tag-list">
+                  <span class="badge badge-default">需求</span>
+                  <span class="badge badge-default">产品</span>
+                  <span class="badge badge-default">v1.0</span>
+                </div>
+                <div style="margin-top: 12px; font-size: 12px; color: var(--color-primary-muted);">
+                  更新于 2025-01-15
+                </div>
+              </div>
+
+              <div class="knowledge-card">
+                <div class="knowledge-title">技术架构设计</div>
+                <div class="knowledge-summary">系统采用模块化设计，包含parser、analyzer、generator和indexer四个核心组件...</div>
+                <div class="tag-list">
+                  <span class="badge badge-default">技术</span>
+                  <span class="badge badge-default">架构</span>
+                </div>
+                <div style="margin-top: 12px; font-size: 12px; color: var(--color-primary-muted);">
+                  更新于 2025-01-14
+                </div>
+              </div>
+
+              <div class="knowledge-card">
+                <div class="knowledge-title">API接口文档</div>
+                <div class="knowledge-summary">RESTful API设计规范，包含文档上传、进度查询和知识库管理等接口定义...</div>
+                <div class="tag-list">
+                  <span class="badge badge-default">API</span>
+                  <span class="badge badge-default">开发</span>
+                </div>
+                <div style="margin-top: 12px; font-size: 12px; color: var(--color-primary-muted);">
+                  更新于 2025-01-13
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Spacing System -->
+    <section class="section">
+      <h2 class="section-title">Spacing System (Base: 4px)</h2>
+      <div class="component-card">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="width: 4px; height: 4px; background: var(--color-accent);"></div>
+            <code style="font-size: 13px;">xs: 4px</code>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="width: 8px; height: 8px; background: var(--color-accent);"></div>
+            <code style="font-size: 13px;">sm: 8px</code>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="width: 16px; height: 16px; background: var(--color-accent);"></div>
+            <code style="font-size: 13px;">md: 16px</code>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="width: 24px; height: 24px; background: var(--color-accent);"></div>
+            <code style="font-size: 13px;">lg: 24px</code>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="width: 32px; height: 32px; background: var(--color-accent);"></div>
+            <code style="font-size: 13px;">xl: 32px</code>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="width: 48px; height: 48px; background: var(--color-accent);"></div>
+            <code style="font-size: 13px;">2xl: 48px</code>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
+      document.getElementById('theme-text').textContent = isDark ? 'Light Mode' : 'Dark Mode';
+    }
+  </script>
+</body>
+</html>

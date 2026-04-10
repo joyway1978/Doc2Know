@@ -43,6 +43,8 @@ output/
 raw_docs/
 !raw_docs/user_login_guide.docx
 !raw_docs/user_payment_guide.docx
+!raw_docs/user_messaging_guide.pdf
+!raw_docs/user_friends_guide.pdf
 *.log
 
 # Testing

@@ -1,0 +1,134 @@
+{
+  "agents": [
+    {
+      "agent_id": "a0ecd34",
+      "agent_type": "general-purpose",
+      "started_at": "2026-04-10T10:28:22.964Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-04-10T10:29:04.475Z",
+      "duration_ms": 41511
+    },
+    {
+      "agent_id": "a16710e",
+      "agent_type": "general-purpose",
+      "started_at": "2026-04-10T10:30:28.941Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-04-10T10:31:02.219Z",
+      "duration_ms": 33278
+    },
+    {
+      "agent_id": "aab2fcf",
+      "agent_type": "oh-my-claudecode:executor",
+      "started_at": "2026-04-10T11:40:58.706Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-04-10T11:41:47.356Z",
+      "duration_ms": 48650
+    },
+    {
+      "agent_id": "a48c10b",
+      "agent_type": "oh-my-claudecode:code-reviewer",
+      "started_at": "2026-04-10T11:41:59.350Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-04-10T11:42:27.970Z",
+      "duration_ms": 28620
+    },
+    {
+      "agent_id": "a9abb60",
+      "agent_type": "oh-my-claudecode:code-reviewer",
+      "started_at": "2026-04-10T11:42:38.184Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-04-10T11:43:02.692Z",
+      "duration_ms": 24508
+    },
+    {
+      "agent_id": "ade005f",
+      "agent_type": "oh-my-claudecode:executor",
+      "started_at": "2026-04-10T11:43:19.882Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-04-10T11:45:14.037Z",
+      "duration_ms": 114155
+    },
+    {
+      "agent_id": "aae71a1",
+      "agent_type": "oh-my-claudecode:code-reviewer",
+      "started_at": "2026-04-10T11:45:23.716Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-04-10T11:46:30.062Z",
+      "duration_ms": 66346
+    },
+    {
+      "agent_id": "a5b0ef0",
+      "agent_type": "oh-my-claudecode:executor",
+      "started_at": "2026-04-10T11:46:49.710Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-04-10T11:48:52.814Z",
+      "duration_ms": 123104
+    },
+    {
+      "agent_id": "a8f8b07",
+      "agent_type": "oh-my-claudecode:executor",
+      "started_at": "2026-04-10T11:49:09.925Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-04-10T11:51:05.790Z",
+      "duration_ms": 115865
+    },
+    {
+      "agent_id": "a14ef56",
+      "agent_type": "oh-my-claudecode:executor",
+      "started_at": "2026-04-10T11:51:33.962Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-04-10T11:52:52.590Z",
+      "duration_ms": 78628
+    },
+    {
+      "agent_id": "a901ac4",
+      "agent_type": "oh-my-claudecode:executor",
+      "started_at": "2026-04-10T11:51:34.017Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-04-10T11:53:45.052Z",
+      "duration_ms": 131035
+    },
+    {
+      "agent_id": "a5a77fe",
+      "agent_type": "oh-my-claudecode:executor",
+      "started_at": "2026-04-10T11:54:09.793Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-04-10T11:58:44.964Z",
+      "duration_ms": 275171
+    },
+    {
+      "agent_id": "a40fd24",
+      "agent_type": "oh-my-claudecode:executor",
+      "started_at": "2026-04-10T11:54:09.844Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-04-10T11:55:45.422Z",
+      "duration_ms": 95578
+    },
+    {
+      "agent_id": "adf1d15",
+      "agent_type": "oh-my-claudecode:code-reviewer",
+      "started_at": "2026-04-10T11:59:03.997Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-04-10T12:00:22.575Z",
+      "duration_ms": 78578
+    }
+  ],
+  "total_spawned": 12,
+  "total_completed": 14,
+  "total_failed": 0,
+  "last_updated": "2026-04-10T12:23:47.952Z"
+}

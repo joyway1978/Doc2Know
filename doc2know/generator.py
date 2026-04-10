@@ -85,7 +85,7 @@ class MarkdownGenerator:
 
     def _resolve_filepath(self, slug: str) -> str:
         """
-        确定最终文件路径，处理文件名冲突
+        确定最终文件路径（覆盖模式）
 
         Args:
             slug: 基础slug
@@ -94,17 +94,6 @@ class MarkdownGenerator:
             完整的文件路径
         """
         filepath = os.path.join(self.topics_dir, f"{slug}.md")
-
-        # 如果文件已存在，添加数字后缀
-        if os.path.exists(filepath):
-            counter = 1
-            while True:
-                new_slug = f"{slug}-{counter}"
-                filepath = os.path.join(self.topics_dir, f"{new_slug}.md")
-                if not os.path.exists(filepath):
-                    break
-                counter += 1
-
         return filepath
 
     def _generate_frontmatter(self, result: Dict[str, Any], source: str) -> str:

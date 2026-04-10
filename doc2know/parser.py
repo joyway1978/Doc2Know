@@ -6,6 +6,8 @@ import shutil
 from typing import Dict, Any, List, Optional
 from pathlib import Path
 
+from .pdf_parser import PdfParser, parse_pdf
+
 
 class DocxParser:
     """Word文档解析器，支持python-docx和pandoc两种解析方式"""
@@ -208,4 +210,21 @@ def parse_docx(file_path: str) -> Dict[str, Any]:
         解析后的结构化内容
     """
     parser = DocxParser()
+    return parser.parse(file_path)
+
+
+def get_parser_for_file(file_path: str):
+    """根据文件扩展名返回相应的解析器"""
+    ext = Path(file_path).suffix.lower()
+    if ext == '.pdf':
+        return PdfParser()
+    elif ext in ['.docx', '.doc']:
+        return DocxParser()
+    else:
+        raise ValueError(f"不支持的文件格式: {ext}")
+
+
+def parse_document(file_path: str) -> Dict[str, Any]:
+    """自动检测文件类型并解析"""
+    parser = get_parser_for_file(file_path)
     return parser.parse(file_path)

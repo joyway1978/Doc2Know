@@ -10,6 +10,7 @@ import click
 
 from .config import Config, ConfigError
 from .parser import DocxParser
+from .pdf_parser import PdfParser
 from .analyzer import LLMAnalyzer
 from .generator import MarkdownGenerator
 from .indexer import Indexer
@@ -26,7 +27,8 @@ class DocumentProcessor:
             config: 配置对象
         """
         self.config = config
-        self.parser = DocxParser()
+        self.docx_parser = DocxParser()
+        self.pdf_parser = PdfParser()
         self.analyzer = LLMAnalyzer(config)
         self.generator = MarkdownGenerator(config.output_dir)
         self.indexer = Indexer(config.output_dir)
@@ -40,11 +42,10 @@ class DocumentProcessor:
         """
         raw_dir = Path(self.config.raw_dir)
 
-        # 扫描所有docx文件
+        # 扫描所有支持的文件类型
         docx_files = list(raw_dir.glob("*.docx"))
-        if not docx_files:
-            # 也尝试 .doc 文件
-            docx_files = list(raw_dir.glob("*.doc"))
+        docx_files.extend(raw_dir.glob("*.doc"))
+        docx_files.extend(raw_dir.glob("*.pdf"))
 
         if not docx_files:
             return {
@@ -64,7 +65,8 @@ class DocumentProcessor:
         click.echo(f"\n发现 {len(docx_files)} 个文档待处理\n")
 
         for i, file_path in enumerate(docx_files, 1):
-            click.echo(f"[{i}/{len(docx_files)}] 处理: {file_path.name}")
+            file_type = "PDF" if file_path.suffix.lower() == '.pdf' else "Word"
+            click.echo(f"[{i}/{len(docx_files)}] [{file_type}] 处理: {file_path.name}")
 
             result = self.process_file(str(file_path))
             stats["files"].append(result)
@@ -102,7 +104,11 @@ class DocumentProcessor:
 
         try:
             # 1. 解析文档
-            parsed_content = self.parser.parse(file_path)
+            ext = Path(file_path).suffix.lower()
+            if ext == '.pdf':
+                parsed_content = self.pdf_parser.parse(file_path)
+            else:
+                parsed_content = self.docx_parser.parse(file_path)
 
             # 2. LLM分析
             analysis_result = self.analyzer.analyze(parsed_content)
@@ -181,14 +187,15 @@ def main(config: str, watch: bool):
                 raw_dir = Path(cfg.raw_dir)
                 current_files = set(
                     str(p) for p in raw_dir.glob("*.docx")
-                ) | set(str(p) for p in raw_dir.glob("*.doc"))
+                ) | set(str(p) for p in raw_dir.glob("*.doc")) | set(str(p) for p in raw_dir.glob("*.pdf"))
 
                 new_files = current_files - processed_files
 
                 if new_files:
                     click.echo(f"\n发现 {len(new_files)} 个新文件")
                     for file_path in new_files:
-                        click.echo(f"\n处理: {Path(file_path).name}")
+                        file_type = "PDF" if Path(file_path).suffix.lower() == '.pdf' else "Word"
+                        click.echo(f"\n[{file_type}] 处理: {Path(file_path).name}")
                         result = processor.process_file(file_path)
 
                         if result["success"]:

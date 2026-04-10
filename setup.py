@@ -13,6 +13,7 @@ setup(
         "pyyaml>=6.0",
         "click>=8.0",
         "tenacity>=8.0",
+        "PyMuPDF>=1.23.0",
     ],
     entry_points={
         "console_scripts": [

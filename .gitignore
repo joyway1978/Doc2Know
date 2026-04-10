@@ -41,6 +41,8 @@ config.yaml
 !config.yaml.example
 output/
 raw_docs/
+!raw_docs/user_login_guide.docx
+!raw_docs/user_payment_guide.docx
 *.log
 
 # Testing

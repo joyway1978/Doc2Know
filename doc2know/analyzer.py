@@ -1,7 +1,5 @@
 """内容分析模块 - LLM调用和JSON解析"""
 
-import json
-import re
 import time
 from typing import Dict, Any, List, Optional
 
@@ -16,6 +14,7 @@ from tenacity import (
 import logging
 
 from .config import Config
+from .utils import parse_json_response, ParseError
 
 logger = logging.getLogger(__name__)
 
@@ -132,7 +131,7 @@ class LLMAnalyzer:
 
         try:
             response = self._call_llm(prompt)
-            return self._parse_json_response(response)
+            return parse_json_response(response)
         except Exception as e:
             logger.error(f"分析文档失败: {e}")
             return {
@@ -302,75 +301,6 @@ class LLMAnalyzer:
         except Exception as e:
             logger.error(f"调用LLM时发生未知错误: {e}")
             raise AnalyzerError(f"调用LLM失败: {e}") from e
-
-    def _parse_json_response(self, response: str) -> Dict[str, Any]:
-        """
-        解析JSON响应，处理格式错误
-
-        错误处理策略：
-        - 尝试直接解析JSON
-        - 如果失败，使用正则提取JSON块
-        - 如果仍失败，标记需人工检查
-
-        Args:
-            response: LLM响应文本
-
-        Returns:
-            解析后的字典
-
-        Raises:
-            AnalyzerError: JSON解析失败时抛出
-        """
-        if not response or not response.strip():
-            raise AnalyzerError("LLM返回空响应")
-
-        # 尝试直接解析
-        try:
-            return json.loads(response.strip())
-        except json.JSONDecodeError:
-            pass
-
-        # 尝试提取JSON代码块
-        json_match = re.search(r'```(?:json)?\s*(\{[\s\S]*?\})\s*```', response)
-        if json_match:
-            try:
-                return json.loads(json_match.group(1))
-            except json.JSONDecodeError:
-                pass
-
-        # 尝试提取花括号包围的内容
-        json_match = re.search(r'(\{[\s\S]*\})', response)
-        if json_match:
-            try:
-                return json.loads(json_match.group(1))
-            except json.JSONDecodeError as e:
-                logger.warning(f"JSON解析失败，尝试清理后重试: {e}")
-                # 尝试清理常见错误
-                cleaned = self._clean_json_text(json_match.group(1))
-                try:
-                    return json.loads(cleaned)
-                except json.JSONDecodeError:
-                    pass
-
-        # 所有解析尝试失败，返回错误信息
-        logger.error(f"无法解析JSON响应: {response[:200]}...")
-        return {
-            "error": "JSON解析失败",
-            "raw_excerpt": response[:200],
-            "title": "解析失败",
-            "summary": "无法解析LLM返回的内容",
-            "tags": ["解析错误"],
-            "sections": [],
-        }
-
-    def _clean_json_text(self, text: str) -> str:
-        """清理JSON文本中的常见错误"""
-        # 移除尾部逗号
-        text = re.sub(r',(\s*[}\]])', r'\1', text)
-        # 修复单引号
-        text = text.replace("'", '"')
-        return text
-
 
 def analyze_content(content: Dict[str, Any], config: Config) -> Dict[str, Any]:
     """

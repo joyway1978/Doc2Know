@@ -273,6 +273,11 @@ class Config:
         """获取最大并发数"""
         return self._config.get("processing", {}).get("max_concurrent", 3)
 
+    @property
+    def split_strategy(self) -> str:
+        """获取智能拆分策略"""
+        return self._config.get("processing", {}).get("split_strategy", "conservative")
+
     def to_dict(self) -> Dict[str, Any]:
         """
         导出配置为字典
